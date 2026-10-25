@@ -10,8 +10,12 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.provider.Settings
+import android.view.View
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.SeekBar
+import android.widget.Spinner
 import android.widget.Switch
 import android.widget.TextView
 import kotlin.math.roundToInt
@@ -47,12 +51,15 @@ class MainActivity : Activity() {
         auto.isChecked = prefs.getBoolean(Keys.ENABLED, true)
         auto.setOnCheckedChangeListener { _, on -> prefs.edit().putBoolean(Keys.ENABLED, on).apply() }
 
-        // Tap to cycle the fallback threshold.
-        findViewById<TextView>(R.id.fallback).setOnClickListener {
-            val opts = listOf(30, 60, 90, 120)
-            val next = opts[(opts.indexOf(prefs.getInt(Keys.FALLBACK_SEC, 60)) + 1) % opts.size]
-            prefs.edit().putInt(Keys.FALLBACK_SEC, next).apply()
-            refresh()
+        val secs = listOf(15, 30, 45, 60, 90, 120, 180)
+        val sp = findViewById<Spinner>(R.id.fallback)
+        sp.adapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, secs.map { "$it s" })
+        sp.setSelection(secs.indexOf(prefs.getInt(Keys.FALLBACK_SEC, 60)).coerceAtLeast(0))
+        sp.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(p: AdapterView<*>?, v: View?, i: Int, id: Long) {
+                prefs.edit().putInt(Keys.FALLBACK_SEC, secs[i]).apply()
+            }
+            override fun onNothingSelected(p: AdapterView<*>?) {}
         }
 
         findViewById<Button>(R.id.grant).setOnClickListener { openAccessSettings() }
@@ -85,7 +92,5 @@ class MainActivity : Activity() {
         findViewById<TextView>(R.id.state).text =
             "Detection: ${if (granted) prefs.getString(Keys.STATE, "IDLE") else "NO ACCESS"}"
         findViewById<TextView>(R.id.volume).text = "Media volume: $now%"
-        findViewById<TextView>(R.id.fallback).text =
-            "Fallback: unknown < ${prefs.getInt(Keys.FALLBACK_SEC, 60)}s = ad (tap to change)"
     }
 }
