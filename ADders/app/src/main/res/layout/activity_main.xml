@@ -11,13 +11,6 @@
         android:orientation="vertical"
         android:padding="24dp">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="APP NAME"
-            android:textColor="#FFFFFF"
-            android:textSize="14sp" />
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -135,14 +128,27 @@
                 android:textColor="#FFFFFF"
                 android:textSize="16sp" />
 
-            <TextView
-                android:id="@+id/fallback"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:minHeight="48dp"
                 android:gravity="center_vertical"
-                android:textColor="#BBBBBB"
-                android:textSize="14sp" />
+                android:minHeight="48dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Fallback: unidentified audio shorter than this counts as an ad"
+                    android:textColor="#BBBBBB"
+                    android:textSize="14sp" />
+
+                <Spinner
+                    android:id="@+id/fallback"
+                    android:layout_width="wrap_content"
+                    android:layout_height="48dp"
+                    android:layout_marginStart="12dp" />
+            </LinearLayout>
 
             <Button
                 android:id="@+id/grant"
