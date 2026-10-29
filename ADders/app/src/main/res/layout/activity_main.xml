@@ -54,7 +54,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="6dp"
-                android:text="Media volume used while an advertisement plays. Songs stay at your normal volume."
+                android:text="Media volume used while an advertisement plays. Songs return to your normal volume, except while a configured fade-out is running."
                 android:textColor="#FFFFFF"
                 android:textSize="16sp" />
 
@@ -87,6 +87,103 @@
                     android:textSize="28sp"
                     android:textStyle="bold" />
             </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:background="@drawable/panel_outer"
+            android:orientation="vertical"
+            android:padding="20dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Volume transitions"
+                android:textColor="#FFFFFF"
+                android:textSize="28sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:text="Gradually change the media volume instead of jumping straight to the new level. Each transition is independent."
+                android:textColor="#FFFFFF"
+                android:textSize="16sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/panel_inner"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="16dp">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="After-advertisement fade-in"
+                    android:textColor="#FFFFFF"
+                    android:textSize="18sp" />
+
+                <Spinner
+                    android:id="@+id/fadeIn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="48dp"
+                    android:layout_marginStart="12dp" />
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:text="Duration used to return from the advertisement volume to your normal listening volume."
+                android:textColor="#BBBBBB"
+                android:textSize="14sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/panel_inner"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="16dp">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Song-ending fade-out"
+                    android:textColor="#FFFFFF"
+                    android:textSize="18sp" />
+
+                <Spinner
+                    android:id="@+id/fadeOut"
+                    android:layout_width="wrap_content"
+                    android:layout_height="48dp"
+                    android:layout_marginStart="12dp" />
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:text="Duration used to lower the volume during the final seconds of a song, toward the advertisement volume."
+                android:textColor="#BBBBBB"
+                android:textSize="14sp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="Fade-out needs the player to report the track duration and playback position. If Android or the player does not provide them, ADders cannot know the exact remaining time and waits for the normal ad/song detection instead."
+                android:textColor="#BBBBBB"
+                android:textSize="14sp" />
         </LinearLayout>
 
         <LinearLayout

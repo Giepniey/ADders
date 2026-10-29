@@ -62,12 +62,30 @@ class MainActivity : Activity() {
             override fun onNothingSelected(p: AdapterView<*>?) {}
         }
 
+        setupDurationSpinner(R.id.fadeIn, Keys.FADE_IN_SEC)
+        setupDurationSpinner(R.id.fadeOut, Keys.FADE_OUT_SEC)
+
         findViewById<Button>(R.id.grant).setOnClickListener { openAccessSettings() }
         if (!hasAccess()) explainAccess()
     }
 
     override fun onResume() { super.onResume(); handler.post(tick) }
     override fun onPause() { super.onPause(); handler.removeCallbacks(tick) }
+
+    /** OFF, 1–15 seconds. The spinner itself shows the selected duration. */
+    private fun setupDurationSpinner(id: Int, key: String) {
+        val options = listOf(0) + (1..15)
+        val labels = options.map { if (it == 0) "OFF" else "$it s" }
+        val spinner = findViewById<Spinner>(id)
+        spinner.adapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, labels)
+        spinner.setSelection(options.indexOf(prefs.getInt(key, 0)).coerceAtLeast(0))
+        spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(p: AdapterView<*>?, v: View?, i: Int, id: Long) {
+                prefs.edit().putInt(key, options[i]).apply()
+            }
+            override fun onNothingSelected(p: AdapterView<*>?) {}
+        }
+    }
 
     private fun hasAccess() =
         Settings.Secure.getString(contentResolver, "enabled_notification_listeners")
