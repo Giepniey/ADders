@@ -5,6 +5,7 @@
         <item name="android:navigationBarColor">@color/bg</item>
         <item name="android:colorAccent">@color/accent</item>
     </style>
+        <style name="Adders" />
 
     <style name="Adders.Label">
         <item name="android:textColor">@color/text_secondary</item>
