@@ -1,8 +1,33 @@
 <resources>
     <style name="Theme.ADders" parent="android:Theme.Material.NoActionBar">
-        <item name="android:windowBackground">#000000</item>
-        <item name="android:statusBarColor">#000000</item>
-        <item name="android:navigationBarColor">#000000</item>
-        <item name="android:colorAccent">#8B0000</item>
+        <item name="android:windowBackground">@color/bg</item>
+        <item name="android:statusBarColor">@color/bg</item>
+        <item name="android:navigationBarColor">@color/bg</item>
+        <item name="android:colorAccent">@color/accent</item>
+    </style>
+
+    <style name="Adders.Label">
+        <item name="android:textColor">@color/text_secondary</item>
+        <item name="android:textSize">12sp</item>
+    </style>
+
+    <style name="Adders.Title">
+        <item name="android:textColor">@color/text_primary</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="Adders.Value">
+        <item name="android:textColor">@color/text_primary</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:fontFamily">monospace</item>
+    </style>
+
+    <style name="Adders.Spinner" parent="android:Widget.Material.Spinner">
+        <item name="android:background">@drawable/spinner_value_bg</item>
+        <item name="android:popupBackground">@drawable/popup_bg</item>
+        <item name="android:dropDownWidth">128dp</item>
+        <item name="android:paddingStart">8dp</item>
+        <item name="android:paddingEnd">24dp</item>
     </style>
 </resources>

@@ -53,7 +53,7 @@ class MainActivity : Activity() {
 
         val secs = listOf(15, 30, 45, 60, 90, 120, 180)
         val sp = findViewById<Spinner>(R.id.fallback)
-        sp.adapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, secs.map { "$it s" })
+        sp.adapter = styledAdapter(secs.map { "$it s" })
         sp.setSelection(secs.indexOf(prefs.getInt(Keys.FALLBACK_SEC, 60)).coerceAtLeast(0))
         sp.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(p: AdapterView<*>?, v: View?, i: Int, id: Long) {
@@ -77,7 +77,7 @@ class MainActivity : Activity() {
         val options = listOf(0) + (1..15)
         val labels = options.map { if (it == 0) "OFF" else "$it s" }
         val spinner = findViewById<Spinner>(id)
-        spinner.adapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, labels)
+        spinner.adapter = styledAdapter(labels)
         spinner.setSelection(options.indexOf(prefs.getInt(key, 0)).coerceAtLeast(0))
         spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(p: AdapterView<*>?, v: View?, i: Int, id: Long) {
@@ -86,6 +86,12 @@ class MainActivity : Activity() {
             override fun onNothingSelected(p: AdapterView<*>?) {}
         }
     }
+
+    /** Display only: same items, rendered with the monospace spinner layouts. */
+    private fun styledAdapter(items: List<String>) =
+        ArrayAdapter(this, R.layout.spinner_item, items).apply {
+            setDropDownViewResource(R.layout.spinner_dropdown_item)
+        }
 
     private fun hasAccess() =
         Settings.Secure.getString(contentResolver, "enabled_notification_listeners")
@@ -106,9 +112,12 @@ class MainActivity : Activity() {
         val now = if (max == 0) 0 else (am.getStreamVolume(AudioManager.STREAM_MUSIC) * 100f / max).roundToInt()
         val granted = hasAccess()
         findViewById<Button>(R.id.grant).visibility = if (granted) android.view.View.GONE else android.view.View.VISIBLE
-        findViewById<TextView>(R.id.app).text = "App: ${prefs.getString(Keys.APP, "-")}"
-        findViewById<TextView>(R.id.state).text =
-            "Detection: ${if (granted) prefs.getString(Keys.STATE, "IDLE") else "NO ACCESS"}"
-        findViewById<TextView>(R.id.volume).text = "Media volume: $now%"
+        findViewById<TextView>(R.id.app).text = prefs.getString(Keys.APP, "-")
+        val detection = if (granted) prefs.getString(Keys.STATE, "IDLE") else "NO ACCESS"
+        findViewById<TextView>(R.id.state).apply {
+            text = detection
+            setTextColor(getColor(if (detection == "ADVERTISEMENT") R.color.accent else R.color.text_primary))
+        }
+        findViewById<TextView>(R.id.volume).text = "$now%"
     }
 }
