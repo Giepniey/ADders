@@ -6,18 +6,18 @@
         <item name="android:colorAccent">@color/accent</item>
     </style>
 
-    <style name="Adders.Label">
+    <style name="Adders.Label" parent="">
         <item name="android:textColor">@color/text_secondary</item>
         <item name="android:textSize">12sp</item>
     </style>
 
-    <style name="Adders.Title">
+    <style name="Adders.Title" parent="">
         <item name="android:textColor">@color/text_primary</item>
         <item name="android:textSize">18sp</item>
         <item name="android:textStyle">bold</item>
     </style>
 
-    <style name="Adders.Value">
+    <style name="Adders.Value" parent="">
         <item name="android:textColor">@color/text_primary</item>
         <item name="android:textSize">14sp</item>
         <item name="android:fontFamily">monospace</item>
