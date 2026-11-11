@@ -1,10 +1,24 @@
 import SwiftUI
 import UniformTypeIdentifiers
 import AVFoundation
+import CoreMedia
+#if canImport(UIKit)
+import UIKit
+#endif
 
 public struct ContentView: View {
     @StateObject private var player = ADdersAudioPlayer()
     @State private var showingFilePicker = false
+
+    private var cardBackground: Color {
+        #if os(iOS)
+        return Color(uiColor: .systemGray6)
+        #else
+        return Color.gray.opacity(0.15)
+        #endif
+    }
+
+    public init() {}
 
     public var body: some View {
         NavigationView {
@@ -35,7 +49,7 @@ public struct ContentView: View {
                         .padding(.horizontal)
                 }
                 .padding()
-                .background(Color(.systemGray6))
+                .background(cardBackground)
                 .cornerRadius(12)
                 .padding(.horizontal)
 
@@ -69,7 +83,7 @@ public struct ContentView: View {
                         .foregroundColor(.gray)
                 }
                 .padding()
-                .background(Color(.systemGray6))
+                .background(cardBackground)
                 .cornerRadius(12)
                 .padding(.horizontal)
 
@@ -107,7 +121,7 @@ public struct ContentView: View {
                     }
                 }
                 .padding()
-                .background(Color(.systemGray6))
+                .background(cardBackground)
                 .cornerRadius(12)
                 .padding(.horizontal)
 
@@ -142,7 +156,9 @@ public struct ContentView: View {
 
                 Spacer()
             }
+            #if os(iOS)
             .navigationBarHidden(true)
+            #endif
         }
     }
 

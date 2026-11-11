@@ -1,5 +1,6 @@
 import SwiftUI
 
+#if os(iOS)
 @main
 struct ADdersPlayerApp: App {
     var body: some Scene {
@@ -8,3 +9,5 @@ struct ADdersPlayerApp: App {
         }
     }
 }
+#endif
+

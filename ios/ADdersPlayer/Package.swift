@@ -3,7 +3,10 @@ import PackageDescription
 
 let package = Package(
     name: "ADdersPlayer",
-    platforms: [.iOS(.v15)],
+    platforms: [
+        .iOS(.v15),
+        .macOS(.v12)
+    ],
     products: [
         .library(name: "ADdersPlayer", targets: ["ADdersPlayer"]),
     ],
@@ -11,8 +14,7 @@ let package = Package(
     targets: [
         .target(
             name: "ADdersPlayer",
-            path: "Sources/ADdersPlayer",
-            resources: []
+            path: "Sources/ADdersPlayer"
         ),
         .testTarget(
             name: "ADdersPlayerTests",
