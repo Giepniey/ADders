@@ -5,12 +5,12 @@ plugins {
 
 android {
     namespace = "com.adders.app"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "com.adders.app"
-        minSdk = 26
-        targetSdk = 34
+        minSdk = 21
+        targetSdk = 35
         versionCode = 1
         versionName = "1"
     }
@@ -22,5 +22,7 @@ android {
 }
 
 dependencies {
+    implementation("androidx.activity:activity-ktx:1.9.0")
+    implementation("androidx.core:core-ktx:1.13.1")
     testImplementation("junit:junit:4.13.2")
 }

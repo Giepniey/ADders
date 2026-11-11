@@ -6,10 +6,12 @@ import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.media.AudioManager
+import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.provider.Settings
+import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
@@ -18,6 +20,11 @@ import android.widget.SeekBar
 import android.widget.Spinner
 import android.widget.Switch
 import android.widget.TextView
+import androidx.activity.OnBackPressedCallback
+import androidx.activity.ComponentActivity
+import androidx.core.view.WindowCompat
+import androidx.core.view.WindowInsets
+import androidx.core.view.WindowInsetsControllerCompat
 import kotlin.math.roundToInt
 
 class MainActivity : Activity() {
@@ -30,6 +37,16 @@ class MainActivity : Activity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        // Edge-to-edge: let the UI extend behind system bars on Android 15+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            getWindow().getAttributes().flags |= WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN
+        }
+        WindowCompat.setDecorFitsSystemWindows(this, false)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            val insetsController = WindowCompat.getInsetsController(window, window.decorView)
+            insetsController.isAppearanceFitsSystemWindows = false
+            insetsController.systemBarsAppearance = WindowInsets.Type.statusBarWindow() or WindowInsets.Type.navigationBarWindow()
+        }
         setContentView(R.layout.activity_main)
         prefs = getSharedPreferences(Keys.PREFS, Context.MODE_PRIVATE)
         am = getSystemService(Context.AUDIO_SERVICE) as AudioManager
@@ -63,6 +80,11 @@ class MainActivity : Activity() {
         }
 
         findViewById<Button>(R.id.grant).setOnClickListener { openAccessSettings() }
+
+        // Add "Keep ADders running" button for battery optimization
+        val keepRunningButton = findViewById<Button>(R.id.keepRunning)
+        keepRunningButton.setOnClickListener { openBatteryOptimizationSettings() }
+
         if (!hasAccess()) explainAccess()
     }
 
@@ -82,6 +104,12 @@ class MainActivity : Activity() {
         .setPositiveButton("Open settings") { _, _ -> openAccessSettings() }
         .setNegativeButton("Later", null)
         .show()
+
+    private fun openBatteryOptimizationSettings() {
+        val intent = Intent(Settings.ACTION_IGNORE_BATTERY_OPTIMIZATION_SETTINGS)
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        startActivity(intent)
+    }
 
     private fun refresh() {
         val max = am.getStreamMaxVolume(AudioManager.STREAM_MUSIC)

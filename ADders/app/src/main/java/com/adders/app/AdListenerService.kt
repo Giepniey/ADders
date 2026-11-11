@@ -8,6 +8,7 @@ import android.media.MediaMetadata
 import android.media.session.MediaController
 import android.media.session.MediaSessionManager
 import android.media.session.PlaybackState
+import android.os.Build
 import android.service.notification.NotificationListenerService
 
 /**
@@ -51,6 +52,15 @@ class AdListenerService : NotificationListenerService() {
         controllers = emptyList()
         vol.restore()
         status("OFF", "-")
+
+        // OEM background kills: attempt to rebind the service
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            try {
+                requestRebind(ComponentName(this, AdListenerService::class.java))
+            } catch (e: Exception) {
+                // Rebind failed; this is expected on some devices
+            }
+        }
     }
 
     private fun setControllers(new: List<MediaController>) {
@@ -72,6 +82,15 @@ class AdListenerService : NotificationListenerService() {
             if (controllers.isEmpty()) { vol.restore(); status("IDLE", "-") }
             return
         }
+
+        // Check if playback is remote (casting, Spotify Connect, etc.)
+        val isRemote = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP_MR1) {
+            val playbackInfo = c.playbackInfo
+            playbackInfo?.playbackType == MediaController.PlaybackInfo.PLAYBACK_TYPE_REMOTE
+        } else {
+            false
+        }
+
         val m = c.metadata
         val kind = AdClassifier.classify(
             m?.getString(MediaMetadata.METADATA_KEY_TITLE),
@@ -81,7 +100,7 @@ class AdListenerService : NotificationListenerService() {
             prefs.getInt(Keys.FALLBACK_SEC, 60) * 1000L
         )
         when (kind) {
-            Kind.AD -> vol.onAd(prefs.getInt(Keys.AD_PCT, 0))
+            Kind.AD -> vol.onAd(prefs.getInt(Keys.AD_PCT, 0), isRemote)
             Kind.SONG -> vol.restore()
             // shortcut: an unclassifiable long segment changes nothing, so the ad volume
             // stays until the next recognised song; this avoids flapping on brief metadata gaps.

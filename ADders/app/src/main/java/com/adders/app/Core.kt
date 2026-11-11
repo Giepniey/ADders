@@ -2,6 +2,7 @@ package com.adders.app
 
 import android.content.SharedPreferences
 import android.media.AudioManager
+import android.os.Build
 import kotlin.math.roundToInt
 
 object Keys {
@@ -13,6 +14,7 @@ object Keys {
     const val APP = "app"
     const val SAVED = "savedVol"     // volume index to restore, -1 = none
     const val APPLIED = "appliedVol" // volume index we set for the ad
+    const val WARNING = "warning"     // warning message for fixed volume or remote playback
 }
 
 enum class Kind { SONG, AD, UNKNOWN }
@@ -40,12 +42,26 @@ class VolumeController(private val am: AudioManager, private val p: SharedPrefer
         set(v) { p.edit().putInt(Keys.APPLIED, v).apply() }
 
     private val max get() = am.getStreamMaxVolume(AudioManager.STREAM_MUSIC)
+    private val min get() = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P)
+        am.getStreamMinVolume(AudioManager.STREAM_MUSIC) else 0
     private val current get() = am.getStreamVolume(AudioManager.STREAM_MUSIC)
 
     fun percent() = if (max == 0) 0 else (current * 100f / max).roundToInt()
 
-    fun onAd(pct: Int) {
-        val target = (pct * max / 100f).roundToInt()
+    fun isVolumeFixed(): Boolean = am.isVolumeFixed
+
+    fun onAd(pct: Int, isRemote: Boolean = false) {
+        if (isVolumeFixed()) {
+            p.edit().putString(Keys.WARNING, "This device has fixed volume").apply()
+            return
+        }
+        if (isRemote) {
+            p.edit().putString(Keys.WARNING, "Fades unavailable while casting").apply()
+            return
+        }
+        p.edit().putString(Keys.WARNING, "").apply()
+
+        val target = (pct * max / 100f).roundToInt().coerceIn(min, max)
         if (saved < 0) saved = current // first ad segment: remember the real volume
         else if (current != applied && target == applied) return // user changed volume mid-ad: respect it
         applied = target
@@ -58,5 +74,6 @@ class VolumeController(private val am: AudioManager, private val p: SharedPrefer
         if (saved >= 0 && current == applied) am.setStreamVolume(AudioManager.STREAM_MUSIC, saved, 0)
         saved = -1
         applied = -1
+        p.edit().putString(Keys.WARNING, "").apply()
     }
 }
