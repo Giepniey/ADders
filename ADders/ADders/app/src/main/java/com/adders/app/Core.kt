@@ -42,7 +42,8 @@ object AdClassifier {
  */
 fun clampFadeDuration(raw: Int): Int {
     return when {
-        raw <= 2 -> 3  // Migrate old 1/2 second values to 3
+        raw == 0 -> 0    // OFF stays OFF
+        raw <= 2 -> 3    // Migrate old 1/2 second values to 3
         raw > 15 -> 15
         else -> raw
     }
