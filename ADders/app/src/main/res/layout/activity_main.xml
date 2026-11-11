@@ -2,7 +2,7 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#000000"
+    android:background="@color/bg"
     android:fillViewport="true"
     android:fitsSystemWindows="true">
 
@@ -13,6 +13,7 @@
         android:padding="24dp"
         android:fitsSystemWindows="true">
 
+        <!-- 1. App Header -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -23,7 +24,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="ADders"
-                android:textColor="#FFFFFF"
+                android:textColor="@color/white"
                 android:textSize="40sp"
                 android:textStyle="bold" />
 
@@ -32,10 +33,11 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
                 android:text="v1"
-                android:textColor="#FFFFFF"
+                android:textColor="@color/white"
                 android:textSize="20sp" />
         </LinearLayout>
 
+        <!-- 2. Section Panel: Advertisement Volume -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -44,11 +46,12 @@
             android:orientation="vertical"
             android:padding="20dp">
 
+            <!-- Section Title (28sp bold) with Description (16sp) -->
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Advertisement volume"
-                android:textColor="#FFFFFF"
+                android:textColor="@color/white"
                 android:textSize="28sp"
                 android:textStyle="bold" />
 
@@ -57,9 +60,10 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="6dp"
                 android:text="Media volume used while an advertisement plays. Songs stay at your normal volume."
-                android:textColor="#FFFFFF"
+                android:textColor="@color/white"
                 android:textSize="16sp" />
 
+            <!-- 3. Volume Slider with Percent Readout (28sp bold lime) -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -75,9 +79,8 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:max="100"
-                    android:progressBackgroundTint="#555555"
-                    android:progressTint="#FFFFFF"
-                    android:thumbTint="#FFFFFF" />
+                    android:progressDrawable="@drawable/seekbar_progress"
+                    android:thumb="@drawable/seekbar_thumb" />
 
                 <TextView
                     android:id="@+id/percent"
@@ -85,50 +88,18 @@
                     android:layout_height="wrap_content"
                     android:gravity="end"
                     android:text="0%"
-                    android:textColor="#FFFFFF"
+                    android:textColor="@color/lime"
                     android:textSize="28sp"
                     android:textStyle="bold" />
             </LinearLayout>
         </LinearLayout>
 
+        <!-- 5. Switch Row: Automatic Volume Control -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
             android:orientation="vertical">
-
-            <Switch
-                android:id="@+id/autoSwitch"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:minHeight="48dp"
-                android:text="Automatic volume control"
-                android:textColor="#FFFFFF"
-                android:textSize="16sp" />
-
-            <TextView
-                android:id="@+id/app"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingTop="8dp"
-                android:textColor="#FFFFFF"
-                android:textSize="16sp" />
-
-            <TextView
-                android:id="@+id/state"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingTop="8dp"
-                android:textColor="#FFFFFF"
-                android:textSize="16sp" />
-
-            <TextView
-                android:id="@+id/volume"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingTop="8dp"
-                android:textColor="#FFFFFF"
-                android:textSize="16sp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -141,31 +112,114 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:text="Automatic volume control"
+                    android:textColor="@color/white"
+                    android:textSize="16sp" />
+
+                <Switch
+                    android:id="@+id/autoSwitch"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:minHeight="48dp"
+                    android:thumbTint="@color/white"
+                    android:trackTint="@color/switch_track_on" />
+            </LinearLayout>
+
+            <!-- 6. Status Lines -->
+            <TextView
+                android:id="@+id/app"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="8dp"
+                android:textColor="@color/white"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/state"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="8dp"
+                android:textColor="@color/white"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/volume"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="8dp"
+                android:textColor="@color/white"
+                android:textSize="16sp" />
+
+            <!-- Warning rows (10. Alert style) -->
+            <TextView
+                android:id="@+id/warning"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:background="@color/warning_bg"
+                android:drawablePadding="8dp"
+                android:gravity="center_vertical"
+                android:minHeight="48dp"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
+                android:textColor="@color/warning_text"
+                android:textSize="14sp"
+                android:visibility="gone" />
+
+            <!-- 4. Fallback Dropdown -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:gravity="center_vertical"
+                android:minHeight="48dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
                     android:text="Fallback: unidentified audio shorter than this counts as an ad"
-                    android:textColor="#BBBBBB"
+                    android:textColor="@color/text_secondary"
                     android:textSize="14sp" />
 
                 <Spinner
                     android:id="@+id/fallback"
                     android:layout_width="wrap_content"
                     android:layout_height="48dp"
-                    android:layout_marginStart="12dp" />
+                    android:layout_marginStart="12dp"
+                    android:background="@drawable/spinner_background"
+                    android:dropDownWidth="wrap_content" />
             </LinearLayout>
 
+            <!-- 7. Primary Button: Grant notification access -->
             <Button
                 android:id="@+id/grant"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="48dp"
                 android:layout_marginTop="12dp"
-                android:text="Grant notification access" />
+                android:background="@color/button_primary_bg"
+                android:gravity="center"
+                android:text="Grant notification access"
+                android:textColor="@color/button_primary_text"
+                android:textSize="16sp"
+                android:textStyle="bold" />
 
+            <!-- 8. Secondary Button: Keep ADders running -->
             <Button
                 android:id="@+id/keepRunning"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="48dp"
                 android:layout_marginTop="8dp"
-                android:text="Keep ADders running" />
+                android:background="@android:color/transparent"
+                android:gravity="center"
+                android:text="Keep ADders running"
+                android:textColor="@color/button_secondary_text"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                style="?android:attr/borderlessButtonStyle" />
 
+            <!-- 9. Tip text -->
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -173,7 +227,7 @@
                 android:paddingStart="4dp"
                 android:paddingEnd="4dp"
                 android:text="Tip: Allow auto-start, set to 'no restrictions', add to 'never sleeping apps'"
-                android:textColor="#999999"
+                android:textColor="@color/text_tip"
                 android:textSize="12sp" />
         </LinearLayout>
     </LinearLayout>

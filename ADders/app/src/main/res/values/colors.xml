@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Primary palette -->
+    <color name="bg">#020c15</color>
+    <color name="lime">#d9df37</color>
+    <color name="brown">#9e704e</color>
+    <color name="white">#FFFFFF</color>
+
+    <!-- Semantic colors -->
+    <color name="white_muted">rgba(255, 255, 255, 0.75)</color>
+    <color name="brown_tint">rgba(158, 112, 78, 0.18)</color>
+
+    <!-- Text colors -->
+    <color name="text_primary">#FFFFFF</color>
+    <color name="text_secondary">rgba(255, 255, 255, 0.75)</color>
+    <color name="text_caption">rgba(255, 255, 255, 0.75)</color>
+    <color name="text_tip">rgba(255, 255, 255, 0.75)</color>
+
+    <!-- UI element colors -->
+    <color name="panel_outline">#9e704e</color>
+    <color name="panel_inner_fill">rgba(158, 112, 78, 0.18)</color>
+
+    <!-- State colors -->
+    <color name="switch_track_on">#d9df37</color>
+    <color name="switch_track_off">#9e704e</color>
+    <color name="slider_track_active">#d9df37</color>
+    <color name="slider_track_inactive">#9e704e</color>
+    <color name="slider_thumb">#d9df37</color>
+
+    <!-- Button colors -->
+    <color name="button_primary_bg">#d9df37</color>
+    <color name="button_primary_text">#020c15</color>
+    <color name="button_secondary_border">#9e704e</color>
+    <color name="button_secondary_text">#FFFFFF</color>
+
+    <!-- Status colors -->
+    <color name="status_idle">rgba(255, 255, 255, 0.75)</color>
+    <color name="status_song">#d9df37</color>
+    <color name="status_ad">#9e704e</color>
+
+    <!-- Alert/warning -->
+    <color name="warning_bg">rgba(158, 112, 78, 0.18)</color>
+    <color name="warning_text">#FFFFFF</color>
+</resources>

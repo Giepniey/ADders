@@ -1,8 +1,12 @@
 <resources>
     <style name="Theme.ADders" parent="android:Theme.Material.NoActionBar">
-        <item name="android:windowBackground">#000000</item>
-        <item name="android:statusBarColor">#000000</item>
-        <item name="android:navigationBarColor">#000000</item>
-        <item name="android:colorAccent">#8B0000</item>
+        <item name="android:windowBackground">#020c15</item>
+        <item name="android:statusBarColor">#020c15</item>
+        <item name="android:navigationBarColor">#020c15</item>
+        <item name="android:colorAccent">#d9df37</item>
+        <item name="android:colorControlActivated">#d9df37</item>
+        <item name="android:colorControlHighlight">#d9df37</item>
+        <item name="android:textColorPrimary">#FFFFFF</item>
+        <item name="android:textColorSecondary">rgba(255, 255, 255, 0.75)</item>
     </style>
 </resources>
