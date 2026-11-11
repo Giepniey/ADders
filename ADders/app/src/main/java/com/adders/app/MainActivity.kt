@@ -37,16 +37,8 @@ class MainActivity : Activity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        // Edge-to-edge: let the UI extend behind system bars on Android 15+
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-            getWindow().getAttributes().flags |= WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN
-        }
+        // Enable edge-to-edge: let the UI extend behind system bars
         WindowCompat.setDecorFitsSystemWindows(this, false)
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-            val insetsController = WindowCompat.getInsetsController(window, window.decorView)
-            insetsController.isAppearanceFitsSystemWindows = false
-            insetsController.systemBarsAppearance = WindowInsets.Type.statusBarWindow() or WindowInsets.Type.navigationBarWindow()
-        }
         setContentView(R.layout.activity_main)
         prefs = getSharedPreferences(Keys.PREFS, Context.MODE_PRIVATE)
         am = getSystemService(Context.AUDIO_SERVICE) as AudioManager
