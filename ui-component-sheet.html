@@ -1,0 +1,972 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ADders UI Component Sheet</title>
+    <style>
+        :root {
+            --bg: #020c15;
+            --lime: #d9df37;
+            --brown: #9e704e;
+            --white: #FFFFFF;
+            --white-muted: rgba(255, 255, 255, 0.75);
+            --brown-tint: rgba(158, 112, 78, 0.18);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Roboto, -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg);
+            color: var(--white);
+            padding: 48px;
+            line-height: 1.4;
+        }
+
+        .sheet-title {
+            font-size: 32sp;
+            font-weight: 700;
+            margin-bottom: 48px;
+            color: var(--lime);
+        }
+
+        .component-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+            gap: 48px;
+            max-width: 1400px;
+        }
+
+        .component-section {
+            margin-bottom: 32px;
+        }
+
+        .component-section h3 {
+            font-size: 14px;
+            font-weight: 400;
+            color: var(--white-muted);
+            margin-bottom: 16px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .label {
+            font-size: 12px;
+            color: var(--white-muted);
+            margin-bottom: 8px;
+            margin-top: 24px;
+        }
+
+        .label:first-child {
+            margin-top: 0;
+        }
+
+        /* Panel Styles */
+        .outer-panel {
+            background: var(--bg);
+            border: 4px solid var(--brown);
+            border-radius: 28px;
+            padding: 20px;
+        }
+
+        .inner-panel {
+            background: var(--brown-tint);
+            border: 4px solid var(--brown);
+            border-radius: 20px;
+            padding: 16px;
+        }
+
+        .inner-panel-fill {
+            background: var(--brown-tint);
+            border-radius: 20px;
+            padding: 16px;
+        }
+
+        /* Typography */
+        .app-title {
+            font-size: 40px;
+            font-weight: 700;
+            color: var(--white);
+        }
+
+        .version-badge {
+            font-size: 20px;
+            color: var(--white);
+            margin-left: 10px;
+        }
+
+        .section-title {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--white);
+        }
+
+        .section-desc {
+            font-size: 16px;
+            color: var(--white);
+            margin-top: 6px;
+        }
+
+        .body-text {
+            font-size: 16px;
+            color: var(--white);
+        }
+
+        .caption {
+            font-size: 14px;
+            color: var(--white-muted);
+        }
+
+        .tip {
+            font-size: 12px;
+            color: var(--white-muted);
+        }
+
+        /* Volume Slider */
+        .slider-container {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .slider-track {
+            flex: 1;
+            height: 8px;
+            background: var(--brown);
+            border-radius: 4px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .slider-progress {
+            height: 100%;
+            background: var(--lime);
+            border-radius: 4px;
+            width: 0%;
+        }
+
+        .slider-thumb {
+            width: 24px;
+            height: 24px;
+            background: var(--lime);
+            border-radius: 50%;
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            left: 0%;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .percent-readout {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--lime);
+            min-width: 72px;
+            text-align: right;
+        }
+
+        /* Dropdown / Spinner */
+        .spinner {
+            height: 48px;
+            border: 4px solid var(--brown);
+            border-radius: 8px;
+            background: var(--bg);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 16px;
+            cursor: pointer;
+            min-width: 120px;
+        }
+
+        .spinner:hover {
+            background: var(--brown-tint);
+        }
+
+        .spinner-value {
+            font-size: 16px;
+            color: var(--white);
+        }
+
+        .spinner-chevron {
+            width: 0;
+            height: 0;
+            border-left: 6px solid transparent;
+            border-right: 6px solid transparent;
+            border-top: 8px solid var(--white);
+        }
+
+        .spinner-dropdown {
+            background: var(--bg);
+            border: 2px solid var(--brown);
+            border-radius: 8px;
+            margin-top: 4px;
+            overflow: hidden;
+        }
+
+        .spinner-option {
+            padding: 12px 16px;
+            font-size: 16px;
+            color: var(--white);
+            cursor: pointer;
+            min-height: 48px;
+            display: flex;
+            align-items: center;
+        }
+
+        .spinner-option:hover {
+            background: var(--brown-tint);
+        }
+
+        .spinner-option.selected {
+            color: var(--lime);
+            font-weight: 700;
+        }
+
+        /* Switch */
+        .switch-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            min-height: 48px;
+        }
+
+        .switch-label {
+            font-size: 16px;
+            color: var(--white);
+        }
+
+        .switch-track {
+            width: 52px;
+            height: 32px;
+            border-radius: 16px;
+            background: var(--brown);
+            position: relative;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .switch-track.on {
+            background: var(--lime);
+        }
+
+        .switch-thumb {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: var(--white);
+            position: absolute;
+            top: 4px;
+            left: 4px;
+            transition: left 0.2s;
+        }
+
+        .switch-track.on .switch-thumb {
+            left: 24px;
+        }
+
+        .switch-track:focus {
+            outline: 3px solid var(--lime);
+            outline-offset: 2px;
+        }
+
+        /* Status Lines */
+        .status-line {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            min-height: 48px;
+            font-size: 16px;
+            color: var(--white);
+        }
+
+        .status-icon {
+            width: 20px;
+            height: 20px;
+            border: 2px solid currentColor;
+            border-radius: 50%;
+        }
+
+        .status-icon.idle {
+            border-color: var(--white-muted);
+        }
+
+        .status-icon.song {
+            border-color: var(--lime);
+        }
+
+        .status-icon.ad {
+            border-color: var(--brown);
+            background: var(--brown);
+        }
+
+        /* Buttons */
+        .btn-primary {
+            width: 100%;
+            min-height: 48px;
+            background: var(--lime);
+            color: var(--bg);
+            font-size: 16px;
+            font-weight: 700;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            padding: 12px 24px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-primary:hover {
+            filter: brightness(1.1);
+        }
+
+        .btn-primary:active {
+            filter: brightness(0.9);
+        }
+
+        .btn-primary:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+        }
+
+        .btn-primary:focus {
+            outline: 3px solid var(--lime);
+            outline-offset: 2px;
+        }
+
+        .btn-secondary {
+            width: 100%;
+            min-height: 48px;
+            background: transparent;
+            color: var(--white);
+            font-size: 16px;
+            font-weight: 700;
+            border: 4px solid var(--brown);
+            border-radius: 8px;
+            cursor: pointer;
+            padding: 12px 24px;
+        }
+
+        .btn-secondary:hover {
+            background: var(--brown-tint);
+        }
+
+        .btn-secondary:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+        }
+
+        /* Warning Row */
+        .warning-row {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 16px;
+            background: var(--brown-tint);
+            border-radius: 8px;
+            font-size: 14px;
+            color: var(--white);
+        }
+
+        .warning-icon {
+            width: 20px;
+            height: 20px;
+            flex-shrink: 0;
+        }
+
+        /* Alert Dialog */
+        .dialog-overlay {
+            background: rgba(2, 12, 21, 0.8);
+            padding: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 200px;
+        }
+
+        .dialog {
+            background: var(--bg);
+            border: 4px solid var(--brown);
+            border-radius: 28px;
+            padding: 24px;
+            max-width: 320px;
+            width: 100%;
+        }
+
+        .dialog-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--white);
+            margin-bottom: 16px;
+        }
+
+        .dialog-body {
+            font-size: 16px;
+            color: var(--white-muted);
+            margin-bottom: 24px;
+            line-height: 1.5;
+        }
+
+        .dialog-buttons {
+            display: flex;
+            justify-content: flex-end;
+            gap: 8px;
+        }
+
+        .dialog-btn {
+            padding: 10px 16px;
+            font-size: 14px;
+            font-weight: 700;
+            border: none;
+            background: transparent;
+            cursor: pointer;
+            min-height: 48px;
+            min-width: 64px;
+        }
+
+        .dialog-btn-primary {
+            color: var(--lime);
+        }
+
+        .dialog-btn-secondary {
+            color: var(--white);
+        }
+
+        .dialog-btn:hover {
+            background: var(--brown-tint);
+            border-radius: 8px;
+        }
+
+        /* iOS Components */
+        .ios-card {
+            background: var(--brown-tint);
+            border-radius: 12px;
+            padding: 16px;
+        }
+
+        .ios-track-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--white);
+            margin-bottom: 4px;
+        }
+
+        .ios-track-time {
+            font-size: 14px;
+            color: var(--white-muted);
+            margin-bottom: 12px;
+        }
+
+        .ios-progress {
+            height: 4px;
+            background: var(--brown);
+            border-radius: 2px;
+            overflow: hidden;
+        }
+
+        .ios-progress-fill {
+            height: 100%;
+            background: var(--lime);
+            width: 35%;
+        }
+
+        .ios-transport {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 32px;
+            padding: 16px 0;
+        }
+
+        .ios-transport-btn {
+            width: 48px;
+            height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            background: transparent;
+            border: none;
+            cursor: pointer;
+        }
+
+        .ios-transport-btn.play {
+            width: 56px;
+            height: 56px;
+            color: var(--lime);
+        }
+
+        .ios-segmented {
+            display: flex;
+            background: var(--brown-tint);
+            border-radius: 8px;
+            padding: 4px;
+            gap: 2px;
+        }
+
+        .ios-segment {
+            flex: 1;
+            min-height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--white);
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        .ios-segment.selected {
+            background: var(--lime);
+            color: var(--bg);
+            font-weight: 700;
+        }
+
+        /* Ripple effect */
+        .ripple {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            transform: scale(0);
+            animation: ripple 0.4s linear;
+            pointer-events: none;
+        }
+
+        @keyframes ripple {
+            to {
+                transform: scale(4);
+                opacity: 0;
+            }
+        }
+
+        /* Focus states */
+        *:focus-visible {
+            outline: 3px solid var(--lime);
+            outline-offset: 2px;
+        }
+
+        /* RTL support demo */
+        .rtl-demo {
+            direction: rtl;
+        }
+
+        /* States display */
+        .states-row {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .state-label {
+            font-size: 10px;
+            color: var(--white-muted);
+            text-transform: uppercase;
+            margin-top: 4px;
+            text-align: center;
+        }
+
+        .state-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+    </style>
+</head>
+<body>
+    <h1 class="sheet-title">ADders UI Component Sheet</h1>
+
+    <div class="component-grid">
+        <!-- ==================== HEADER ==================== -->
+        <div class="component-section">
+            <h3>1. App Header</h3>
+            <div class="outer-panel">
+                <div style="display: flex; align-items: baseline;">
+                    <span class="app-title">ADders</span>
+                    <span class="version-badge">v1</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== SECTION PANEL ==================== -->
+        <div class="component-section">
+            <h3>2. Section Panel with Title</h3>
+            <div class="outer-panel">
+                <div class="section-title">Advertisement volume</div>
+                <div class="section-desc">Media volume used while an advertisement plays. Songs stay at your normal volume.</div>
+            </div>
+        </div>
+
+        <!-- ==================== VOLUME SLIDER ==================== -->
+        <div class="component-section">
+            <h3>3. Volume Slider</h3>
+            <div class="outer-panel">
+                <div class="inner-panel-fill">
+                    <div class="slider-container">
+                        <div class="slider-track">
+                            <div class="slider-progress" style="width: 0%;"></div>
+                            <div class="slider-thumb" style="left: calc(0% - 12px);"></div>
+                        </div>
+                        <div class="percent-readout">0%</div>
+                    </div>
+                </div>
+
+                <div class="label" style="margin-top: 24px;">With value</div>
+                <div class="inner-panel-fill">
+                    <div class="slider-container">
+                        <div class="slider-track">
+                            <div class="slider-progress" style="width: 40%;"></div>
+                            <div class="slider-thumb" style="left: calc(40% - 12px);"></div>
+                        </div>
+                        <div class="percent-readout">40%</div>
+                    </div>
+                </div>
+
+                <div class="label">Disabled</div>
+                <div class="inner-panel-fill" style="opacity: 0.4;">
+                    <div class="slider-container">
+                        <div class="slider-track">
+                            <div class="slider-progress" style="width: 25%;"></div>
+                        </div>
+                        <div class="percent-readout">25%</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== DROPDOWN / SPINNER ==================== -->
+        <div class="component-section">
+            <h3>4. Dropdown (Spinner)</h3>
+            <div class="outer-panel">
+                <div class="label">Default (closed)</div>
+                <div class="spinner">
+                    <span class="spinner-value">OFF</span>
+                    <div class="spinner-chevron"></div>
+                </div>
+
+                <div class="label">Expanded with options</div>
+                <div class="spinner">
+                    <span class="spinner-value">7 s</span>
+                    <div class="spinner-chevron" style="transform: rotate(180deg);"></div>
+                </div>
+                <div class="spinner-dropdown">
+                    <div class="spinner-option">OFF</div>
+                    <div class="spinner-option">3 s</div>
+                    <div class="spinner-option">5 s</div>
+                    <div class="spinner-option selected">7 s</div>
+                    <div class="spinner-option">10 s</div>
+                    <div class="spinner-option">15 s</div>
+                </div>
+
+                <div class="label">Focused</div>
+                <div class="spinner" style="outline: 3px solid var(--lime); outline-offset: 2px;">
+                    <span class="spinner-value">5 s</span>
+                    <div class="spinner-chevron"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== SWITCH ==================== -->
+        <div class="component-section">
+            <h3>5. Switch Row</h3>
+            <div class="outer-panel">
+                <div class="switch-row">
+                    <span class="switch-label">Automatic volume control</span>
+                    <div class="switch-track on">
+                        <div class="switch-thumb"></div>
+                    </div>
+                </div>
+
+                <div class="label" style="margin-top: 16px;">OFF state</div>
+                <div class="switch-row">
+                    <span class="switch-label">Automatic volume control</span>
+                    <div class="switch-track">
+                        <div class="switch-thumb"></div>
+                    </div>
+                </div>
+
+                <div class="label">Disabled</div>
+                <div class="switch-row" style="opacity: 0.4;">
+                    <span class="switch-label">Automatic volume control</span>
+                    <div class="switch-track on">
+                        <div class="switch-thumb"></div>
+                    </div>
+                </div>
+
+                <div class="label">Focused</div>
+                <div class="switch-row">
+                    <span class="switch-label">Automatic volume control</span>
+                    <div class="switch-track on" style="outline: 3px solid var(--lime); outline-offset: 2px;">
+                        <div class="switch-thumb"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== STATUS LINES ==================== -->
+        <div class="component-section">
+            <h3>6. Status Lines</h3>
+            <div class="outer-panel">
+                <div class="status-line">
+                    <span>App: Spotify</span>
+                </div>
+                <div class="status-line">
+                    <div class="status-icon idle"></div>
+                    <span>Detection: IDLE</span>
+                </div>
+                <div class="status-line">
+                    <div class="status-icon song"></div>
+                    <span>Detection: SONG</span>
+                </div>
+                <div class="status-line">
+                    <div class="status-icon ad"></div>
+                    <span>Detection: AD</span>
+                </div>
+                <div class="status-line">
+                    <span>Detection: NO ACCESS</span>
+                </div>
+                <div class="status-line">
+                    <span>Media volume: 40%</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== PRIMARY BUTTON ==================== -->
+        <div class="component-section">
+            <h3>7. Primary Button</h3>
+            <div class="outer-panel">
+                <div class="states-row">
+                    <div class="state-container" style="flex: 1;">
+                        <button class="btn-primary">Grant notification access</button>
+                        <div class="state-label">Default</div>
+                    </div>
+                </div>
+                <div class="states-row" style="margin-top: 16px;">
+                    <div class="state-container" style="flex: 1;">
+                        <button class="btn-primary" style="filter: brightness(1.1);">Grant notification access</button>
+                        <div class="state-label">Hover</div>
+                    </div>
+                </div>
+                <div class="states-row" style="margin-top: 16px;">
+                    <div class="state-container" style="flex: 1;">
+                        <button class="btn-primary" style="filter: brightness(0.9);">Grant notification access</button>
+                        <div class="state-label">Pressed</div>
+                    </div>
+                </div>
+                <div class="states-row" style="margin-top: 16px;">
+                    <div class="state-container" style="flex: 1;">
+                        <button class="btn-primary" disabled>Grant notification access</button>
+                        <div class="state-label">Disabled</div>
+                    </div>
+                </div>
+                <div class="states-row" style="margin-top: 16px;">
+                    <div class="state-container" style="flex: 1;">
+                        <button class="btn-primary" style="outline: 3px solid var(--lime); outline-offset: 2px;">Grant notification access</button>
+                        <div class="state-label">Focused</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== SECONDARY BUTTON ==================== -->
+        <div class="component-section">
+            <h3>8. Secondary Button</h3>
+            <div class="outer-panel">
+                <div class="states-row">
+                    <div class="state-container" style="flex: 1;">
+                        <button class="btn-secondary">Keep ADders running</button>
+                        <div class="state-label">Default</div>
+                    </div>
+                </div>
+                <div class="states-row" style="margin-top: 16px;">
+                    <div class="state-container" style="flex: 1;">
+                        <button class="btn-secondary" style="background: var(--brown-tint);">Keep ADders running</button>
+                        <div class="state-label">Hover</div>
+                    </div>
+                </div>
+                <div class="states-row" style="margin-top: 16px;">
+                    <div class="state-container" style="flex: 1;">
+                        <button class="btn-secondary" disabled>Keep ADders running</button>
+                        <div class="state-label">Disabled</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== TEXT STYLES ==================== -->
+        <div class="component-section">
+            <h3>9. Text Styles</h3>
+            <div class="outer-panel">
+                <div class="caption">Caption text – 14sp, 75% white opacity</div>
+                <div class="tip" style="margin-top: 8px;">Tip text – 12sp, for helper text below controls</div>
+
+                <div class="label" style="margin-top: 16px;">Warning Row</div>
+                <div class="warning-row">
+                    <svg class="warning-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M12 9v4M12 17h.01M12 3l9.5 16.5H2.5L12 3z"/>
+                    </svg>
+                    <span>This device has fixed volume</span>
+                </div>
+
+                <div class="warning-row" style="margin-top: 8px;">
+                    <svg class="warning-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M18.36 6.64a9 9 0 1 1-12.73 0M12 2v10"/>
+                    </svg>
+                    <span>Fades unavailable while casting</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== ALERT DIALOG ==================== -->
+        <div class="component-section">
+            <h3>10. Alert Dialog</h3>
+            <div class="dialog-overlay">
+                <div class="dialog">
+                    <div class="dialog-title">Notification access needed</div>
+                    <div class="dialog-body">Android only lets an app see what other apps are playing (song title, artist, play state) through Notification access. ADders reads nothing else and never reads your notifications' content.</div>
+                    <div class="dialog-buttons">
+                        <button class="dialog-btn dialog-btn-secondary">Later</button>
+                        <button class="dialog-btn dialog-btn-primary">Open settings</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== iOS NOW-PLAYING CARD ==================== -->
+        <div class="component-section">
+            <h3>11a. iOS: Now-Playing Card</h3>
+            <div class="outer-panel">
+                <div class="ios-card">
+                    <div class="ios-track-title">Track Name.mp3</div>
+                    <div class="ios-track-time">1:23 / 3:45</div>
+                    <div class="ios-progress">
+                        <div class="ios-progress-fill"></div>
+                    </div>
+                </div>
+
+                <div class="label" style="margin-top: 16px;">Transport Controls</div>
+                <div class="ios-transport">
+                    <button class="ios-transport-btn">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M6 6h2v12H6V6zm3.5 6l8.5 6V6l-8.5 6z"/>
+                        </svg>
+                    </button>
+                    <button class="ios-transport-btn play">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M8 5v14l11-7L8 5z"/>
+                        </svg>
+                    </button>
+                    <button class="ios-transport-btn">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M6 18l8.5-6L6 6v12zM16 6v12h2V6h-2z"/>
+                        </svg>
+                    </button>
+                </div>
+
+                <div class="ios-transport">
+                    <button class="ios-transport-btn">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M6 6h2v12H6V6zm3.5 6l8.5 6V6l-8.5 6z"/>
+                        </svg>
+                    </button>
+                    <button class="ios-transport-btn play">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M6 4h4v16H6V6zm8 0h4v16h-4V4z"/>
+                        </svg>
+                    </button>
+                    <button class="ios-transport-btn">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M6 18l8.5-6L6 6v12zM16 6v12h2V6h-2z"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== iOS SEGMENTED PICKER ==================== -->
+        <div class="component-section">
+            <h3>11b. iOS: Segmented Picker</h3>
+            <div class="outer-panel">
+                <div style="margin-bottom: 16px;">
+                    <div class="caption" style="margin-bottom: 8px;">Fade-in</div>
+                    <div class="ios-segmented">
+                        <div class="ios-segment selected">OFF</div>
+                        <div class="ios-segment">3s</div>
+                        <div class="ios-segment">5s</div>
+                        <div class="ios-segment">7s</div>
+                        <div class="ios-segment">10s</div>
+                        <div class="ios-segment">15s</div>
+                    </div>
+                </div>
+
+                <div>
+                    <div class="caption" style="margin-bottom: 8px;">Fade-out</div>
+                    <div class="ios-segmented">
+                        <div class="ios-segment">OFF</div>
+                        <div class="ios-segment">3s</div>
+                        <div class="ios-segment selected">5s</div>
+                        <div class="ios-segment">7s</div>
+                        <div class="ios-segment">10s</div>
+                        <div class="ios-segment">15s</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== RTL DEMO ==================== -->
+        <div class="component-section">
+            <h3>RTL Layout Support</h3>
+            <div class="outer-panel rtl-demo">
+                <div style="display: flex; align-items: baseline;">
+                    <span class="app-title">ADders</span>
+                    <span class="version-badge">v1</span>
+                </div>
+                <div class="switch-row" style="margin-top: 16px;">
+                    <span class="switch-label">التحكم التلقائي في مستوى الصوت</span>
+                    <div class="switch-track on">
+                        <div class="switch-thumb"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Palette reference -->
+    <div style="margin-top: 64px; padding-top: 32px; border-top: 1px solid var(--brown);">
+        <h3 style="color: var(--lime); margin-bottom: 24px;">Palette Reference</h3>
+        <div style="display: flex; gap: 24px; flex-wrap: wrap;">
+            <div>
+                <div style="width: 80px; height: 80px; background: var(--bg); border: 2px solid var(--brown); border-radius: 8px;"></div>
+                <div class="tip" style="margin-top: 8px;">#020c15<br>Background</div>
+            </div>
+            <div>
+                <div style="width: 80px; height: 80px; background: var(--lime); border-radius: 8px;"></div>
+                <div class="tip" style="margin-top: 8px;">#d9df37<br>Lime (Accent)</div>
+            </div>
+            <div>
+                <div style="width: 80px; height: 80px; background: var(--brown); border-radius: 8px;"></div>
+                <div class="tip" style="margin-top: 8px;">#9e704e<br>Brown</div>
+            </div>
+            <div>
+                <div style="width: 80px; height: 80px; background: var(--brown-tint); border: 2px solid var(--brown); border-radius: 8px;"></div>
+                <div class="tip" style="margin-top: 8px;">Brown @ 18%<br>Inner panel fill</div>
+            </div>
+            <div>
+                <div style="width: 80px; height: 80px; background: var(--white); border-radius: 8px;"></div>
+                <div class="tip" style="margin-top: 8px;">#FFFFFF<br>White (Text)</div>
+            </div>
+            <div>
+                <div style="width: 80px; height: 80px; background: rgba(255,255,255,0.75); border-radius: 8px;"></div>
+                <div class="tip" style="margin-top: 8px;">White @ 75%<br>Muted text</div>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
