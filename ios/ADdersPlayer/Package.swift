@@ -5,7 +5,7 @@ let package = Package(
     name: "ADdersPlayer",
     platforms: [.iOS(.v15)],
     products: [
-        .executable(name: "ADdersPlayer", targets: ["ADdersPlayer"]),
+        .library(name: "ADdersPlayer", targets: ["ADdersPlayer"]),
     ],
     dependencies: [],
     targets: [
