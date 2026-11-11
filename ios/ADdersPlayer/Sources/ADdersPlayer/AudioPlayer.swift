@@ -43,6 +43,7 @@ public class ADdersAudioPlayer: NSObject, ObservableObject, AVAudioPlayerDelegat
     }
 
     private func setupAudioSession() {
+        #if os(iOS)
         do {
             let session = AVAudioSession.sharedInstance()
             try session.setCategory(.playback, mode: .default, options: [])
@@ -50,9 +51,11 @@ public class ADdersAudioPlayer: NSObject, ObservableObject, AVAudioPlayerDelegat
         } catch {
             print("Failed to set audio session category: \(error)")
         }
+        #endif
     }
 
     private func setupRemoteCommands() {
+        #if os(iOS)
         let commandCenter = MPRemoteCommandCenter.shared()
         commandCenter.playCommand.addTarget { [weak self] _ in
             self?.play()
@@ -70,6 +73,7 @@ public class ADdersAudioPlayer: NSObject, ObservableObject, AVAudioPlayerDelegat
             self?.previous()
             return .success
         }
+        #endif
     }
 
     public func setQueue(_ tracks: [Track], startAtIndex index: Int = 0) {
@@ -141,7 +145,9 @@ public class ADdersAudioPlayer: NSObject, ObservableObject, AVAudioPlayerDelegat
 
     public func seek(to time: Double) {
         stopFades()
+        #if os(iOS)
         player?.currentTime = time
+        #endif
         currentTime = time
         player?.volume = selectedVolume
         if isPlaying {
@@ -255,6 +261,7 @@ public class ADdersAudioPlayer: NSObject, ObservableObject, AVAudioPlayerDelegat
     }
 
     private func updateNowPlayingInfo() {
+        #if os(iOS)
         guard currentIndex >= 0 && currentIndex < queue.count else {
             MPNowPlayingInfoCenter.default().nowPlayingInfo = nil
             return
@@ -266,6 +273,7 @@ public class ADdersAudioPlayer: NSObject, ObservableObject, AVAudioPlayerDelegat
         info[MPMediaItemPropertyPlaybackDuration] = duration
         info[MPNowPlayingInfoPropertyPlaybackRate] = isPlaying ? 1.0 : 0.0
         MPNowPlayingInfoCenter.default().nowPlayingInfo = info
+        #endif
     }
 
     public func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
